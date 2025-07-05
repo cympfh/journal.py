@@ -7,7 +7,7 @@ from typing import Any
 from fastapi import Body, FastAPI, Query
 from pydantic import BaseModel
 
-app = FastAPI(title="journal.py", version="1.0.0")
+app = FastAPI(title="journal.py", version="1.0.0", docs_url="/journal/docs")
 db = None
 
 
