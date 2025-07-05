@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run black:*)",
+      "Bash(uv run isort:*)",
+      "Bash(uv run ruff:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}
