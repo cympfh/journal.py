@@ -2,6 +2,10 @@
 
 A Simple Server as a Logging Service
 
+This journal server is a simple logging server that stores arbitrary values (in JSON format) associated with section and key pairs, along with timestamps.
+
+journal server は `section`, `key` に紐づく自由な値（JSON形式）をタイムスタンプ付きで保存するだけのシンプルなロギングサーバです。
+
 ## Working on
 
 http://s.cympfh.cc/journal

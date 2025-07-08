@@ -125,6 +125,24 @@ class JournalEntry(BaseModel):
     timestamp: str
 
 
+@app.get("/journal")
+def get_index():
+    return {
+        "section": "journal",
+        "key": "index",
+        "data": {
+            "description": "Journal API for storing and retrieving entries",
+            "github": "https://github.com/cympfh/journal.py",
+            "docs": "http://s.cympfh.cc/journal/docs",
+        },
+    }
+
+
+@app.get("/journal/")
+def get_index2():
+    return get_index()
+
+
 @app.get("/journal/{section}/{key}")
 def get_journal(
     section: str,
