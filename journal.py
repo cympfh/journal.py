@@ -54,6 +54,21 @@ class Database:
     def get_entries(
         self, section: str, key: str, tail: int = 10, from_timestamp: str | None = None
     ):
+        """Retrieve journal entries for a specific section and key.
+
+        Entries are ordered by timestamp in descending order.
+
+        Parameters
+        ----------
+        section
+            section name
+        key
+            key name
+        tail
+            number of entries to return (default: 10)
+        from_timestamp
+            start timestamp in ISO format (YYYY-MM-DD HH:MM:SS) to filter entries
+        """
         cursor = self.connection.cursor()
 
         if from_timestamp:
@@ -68,7 +83,7 @@ class Database:
                 SELECT section, key, data, timestamp
                 FROM journal 
                 WHERE section = ? AND key = ? AND timestamp >= ?
-                ORDER BY timestamp
+                ORDER BY timestamp DESC
                 LIMIT ?
                 """,
                 (section, key, from_timestamp, tail),
@@ -79,7 +94,7 @@ class Database:
                 SELECT section, key, data, timestamp
                 FROM journal
                 WHERE section = ? AND key = ?
-                ORDER BY timestamp
+                ORDER BY timestamp DESC
                 LIMIT ?
                 """,
                 (section, key, tail),
@@ -135,7 +150,7 @@ def get_journal(
         )
         for row in rows
     ]
-    if reverse:
+    if not reverse:
         entries.reverse()
     return entries
 
