@@ -13,7 +13,7 @@ db = None
 
 class Database:
     def __init__(self):
-        self.path = os.getenv("DATABASE_PATH", "journal.db")
+        self.path = os.getenv("DATABASE_PATH", "data/journal.db")
         self.connection = sqlite3.connect(self.path, check_same_thread=False)
         self.connection.row_factory = sqlite3.Row
         self.create_tables()
