@@ -7,7 +7,12 @@ from typing import Any
 from fastapi import Body, FastAPI, Query
 from pydantic import BaseModel
 
-app = FastAPI(title="journal.py", version="1.0.0", docs_url="/journal/docs")
+app = FastAPI(
+    title="journal.py",
+    version="1.1.0",
+    root_path="/journal",
+    root_path_in_servers=False,
+)
 db = None
 
 
@@ -125,7 +130,7 @@ class JournalEntry(BaseModel):
     timestamp: str
 
 
-@app.get("/journal")
+@app.get("/")
 def get_index():
     return {
         "section": "journal",
@@ -138,12 +143,12 @@ def get_index():
     }
 
 
-@app.get("/journal/")
-def get_index2():
+@app.get("")
+def get_index_alias():
     return get_index()
 
 
-@app.get("/journal/{section}/{key}")
+@app.get("/{section}/{key}")
 def get_journal(
     section: str,
     key: str,
@@ -173,7 +178,7 @@ def get_journal(
     return entries
 
 
-@app.post("/journal/{section}/{key}")
+@app.post("/{section}/{key}")
 def post_journal(
     section: str,
     key: str,
