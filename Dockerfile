@@ -14,7 +14,7 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen
 
 # Copy application code
-COPY journal.py ./
+COPY journal.py log_conf.yaml ./
 
 # Create volume mount point for database
 VOLUME ["/app/data"]
@@ -26,4 +26,4 @@ ENV DATABASE_PATH=/app/data/journal.db
 EXPOSE 8000
 
 # Run FastAPI server
-CMD ["uv", "run", "fastapi", "run", "--host", "0.0.0.0", "--port", "8000", "journal.py"]
+CMD ["uv", "run", "uvicorn", "journal:app", "--host", "0.0.0.0", "--port", "8000", "--log-config", "log_conf.yaml"]

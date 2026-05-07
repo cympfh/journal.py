@@ -15,7 +15,7 @@ journal.pyは、JSON形式でログエントリを保存・取得できるシン
 uv sync
 
 # 開発環境でサーバーを起動
-fastapi dev --host 0.0.0.0 --port 8000 --reload journal.py
+uvicorn journal:app --host 0.0.0.0 --port 8000 --reload --log-config log_conf.yaml
 
 # コードフォーマット
 uv run black journal.py

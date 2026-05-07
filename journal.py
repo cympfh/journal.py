@@ -1,11 +1,14 @@
 import datetime
 import json
+import logging
 import os
 import sqlite3
 from typing import Any
 
 from fastapi import Body, FastAPI, Query
 from pydantic import BaseModel
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="journal.py",
@@ -23,23 +26,21 @@ class Database:
         self.connection.row_factory = sqlite3.Row
         self.create_tables()
 
-        # Debug output: show database path and sample data
-        print(f"Database initialized at: {self.path}")
+        logger.info("Database initialized at: %s", self.path)
         cursor = self.connection.cursor()
         cursor.execute("SELECT COUNT(*) as count FROM journal")
         count = cursor.fetchone()["count"]
-        print(f"Total records in database: {count}")
+        logger.info("Total records in database: %d", count)
 
         if count > 0:
             cursor.execute(
                 "SELECT section, key, timestamp FROM journal ORDER BY timestamp LIMIT 3"
             )
             sample_rows = cursor.fetchall()
-            print("Sample records:")
             for row in sample_rows:
-                print(f"  {row['timestamp']} - {row['section']}/{row['key']}")
+                logger.info("Sample: %s - %s/%s", row["timestamp"], row["section"], row["key"])
         else:
-            print("Database is empty")
+            logger.info("Database is empty")
 
     def create_tables(self):
         cursor = self.connection.cursor()
